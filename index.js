@@ -1,6 +1,9 @@
 // GIVEN a command-line application that accepts user input
 // WHEN I am prompted for my team members and their information
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
+const inquirer = require('inquirer');
+const fs = require('fs');
+const ec = require('./lib/classes.js')
 
 function generateProfiles(data) {
     return (
@@ -41,40 +44,181 @@ function generateProfiles(data) {
 
 // Employee classes
 
-class Employee {
-    constructor(name, id, email) {
-        this.name = name;
-        this.id = id;
-        this.email = email;
+// class Employee {
+//     constructor(name, id, email) {
+//         this.name = name;
+//         this.id = id;
+//         this.email = email;
+//     }
+//     getName = () => {
+//         console.log("Name: " + this.name)
+//     };
+//     getId = () => {
+//         console.log("ID: " + this.id)
+//     };
+//     getEmail = () => {
+//         console.log("Email: " + this.email)
+//     };
+//     getRole = () => {
+//         console.log("Employee")
+//     }
+// };
 
-        this.getName = () => {
-            console.log("Name: " + this.name)
-        };
-        this.getId = () => {
-            console.log("ID: " + this.id)
-        };
-        this.getEmail = () => {
-            console.log("Email: " + this.email)
-        };
-        this.getRole = () => {
-            return "Employee"
-        }
+// class Manager extends Employee {
+//     constructor(name, id, email, officeNumber) {
+//         super(name, id, email);
+//         this.officeNumber = officeNumber; 
+//     };
+//     getRole= () => {
+//         return "Manager"
+//     }
+// };
+
+// class Engineer extends Employee {
+//     constructor(name, id, email, github) {
+//         super(name, id, email);
+//         this.github = github; 
+//     };
+//     getGithub = () => {
+//         console.log(this.github)
+//     };
+//     getRole= () => {
+//         console.log("Engineer")
+//     }
+// };
+
+// class Intern extends Employee {
+//     constructor(name, id, email, school) {
+//         super(name, id, email);
+//         this.school = school; 
+//     };
+//     getSchool = () => {
+//         console.log(this.school)
+//     };
+//     getRole= () => {
+//         console.log("Intern")
+//     }
+// };
+
+const mgrData = [
+    {
+        type: "input",
+        message: "Enter Manager's name: ",
+        name: "manager"
+    },
+    {
+        type: "input",
+        message: "Enter Manager's ID: ",
+        name: "mgrId"
+    },
+    {
+        type: "input",
+        message: "Enter Manager's email: ",
+        name: "mgrEmail"
+    },
+    {
+        type: "input",
+        message: "Enter Manager's office number: ",
+        name: "mgrOffice"
+    },
+]
+
+const engData = [
+    {
+        type: "input",
+        message: "Enter Engineers's name: ",
+        name: "engineer"
+    },
+    {
+        type: "input",
+        message: "Enter Engineer's ID: ",
+        name: "engId"
+    },
+    {
+        type: "input",
+        message: "Enter Engineer's email: ",
+        name: "engEmail"
+    },
+    {
+        type: "input",
+        message: "Enter Engineer's gitHub username: ",
+        name: "engGit"
     }
+]
+
+const intData = [
+    {
+        type: "input",
+        message: "Enter Intern's name: ",
+        name: "intern"
+    },
+    {
+        type: "input",
+        message: "Enter Intern's ID: ",
+        name: "intId"
+    },
+    {
+        type: "input",
+        message: "Enter Intern's email: ",
+        name: "intEmail"
+    },
+    {
+        type: "input",
+        message: "Enter Intern's school: ",
+        name: "intSchool"
+    },
+]
+
+const anotherEmp = [
+    {
+        type: "list",
+        messgae: "Choose another employee type to add: ",
+        name: "empType",
+        choices: ["Engineer", "Intern", "None"]
+    },
+]
+// const cal = new ec.Manager("cal", "123", "cp@test.com", "456")
+
+// console.log(cal.officeNumber)
+// cal.getName()
+// cal.getRole()
+function addAnother(data) {
+    
 }
 
-class Manager extends Employee {
-    constructor(officeNumber) {
-        super(name, id, email);
-        this.officeNumber = officeNumber;
-        super.getName()
-        super.getId()
-        super.getEmail()
-        this.getRole = () => {
-            return "Manager"
+function chooseEmployee() {
+    inquirer
+    .prompt(mgrData, anotherEmp)
+    .then(data => {
+        if(data.empType === "engineer") {
+            inquirer.prompt(engData, anotherEmp)
+            .then(engData => {
+
+            })
         }
-    }
+    })
 }
 
-const cal = new Manager("cal", "123", "cp@test.com", "456")
+function init() {
+    chooseEmployee()
+    if(employeeData.empType === "Manager") {
+        inquirer
+        .prompt(
+            {
+                type:"input",
+                message: "Enter Manager's office number: ",
+                name: "offNum"
+            }
+        )
+        .then (data => {
+            console.log(data.offNum)
+        })
+    }
+}
+// chooseEmployee()
+// testCase = chooseEmployee()
+// testCase
+// console.log(testCase.email)
+// console.log(chooseEmployee.email)
 
-cal.officeNumber
+init()
