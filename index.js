@@ -2,30 +2,39 @@
 // WHEN I am prompted for my team members and their information
 // THEN an HTML file is generated that displays a nicely formatted team roster based on user input
 const inquirer = require('inquirer');
+const confirm = require('inquirer-confirm');
 const fs = require('fs');
-const ec = require('./lib/classes.js')
+const Employee = require('./lib/Employee.js');
+const Manager = require('./lib/Manager.js');
+const Engineer = require('./lib/Engineer.js');
+const Intern = require('./lib/Intern.js');
+const render = require('./src/template.js');
+const allMgrData = [];
+const allEngData = [];
+const allIntData = [];
 
-function generateProfiles(data) {
-    return (
-        `
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-            <link rel="stylesheet" href="./style.css">
-            <title>Document</title>
-        </head>
-        <body>
 
-        <script src="./assets/index.js"></script>
-        </body>
-        </html>
-        `
-    )
-}
+// function generateProfiles(data) {
+//     return (
+//         `
+//         <!DOCTYPE html>
+//         <html lang="en">
+//         <head>
+//             <meta charset="UTF-8">
+//             <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+//             <link rel="stylesheet" href="./style.css">
+//             <title>Document</title>
+//         </head>
+//         <body>
+
+//         <script src="./assets/index.js"></script>
+//         </body>
+//         </html>
+//         `
+//     )
+// }
 // WHEN I click on an email address in the HTML
 // THEN my default email program opens and populates the TO field of the email with the address
 // WHEN I click on the GitHub username
@@ -99,121 +108,104 @@ function generateProfiles(data) {
 //         console.log("Intern")
 //     }
 // };
-
-const mgrData = [
+const empData = [
     {
-        type: "input",
-        message: "Enter Manager's name: ",
-        name: "manager"
+        type: "list",
+        messgae: "Choose an employee type to add: ",
+        name: "type",
+        choices: ["Manager", "Engineer", "Intern"]
     },
     {
         type: "input",
-        message: "Enter Manager's ID: ",
-        name: "mgrId"
+        message: "Enter Employees's name: ",
+        name: "employee"
     },
     {
         type: "input",
-        message: "Enter Manager's email: ",
-        name: "mgrEmail"
+        message: "Enter Employee's ID: ",
+        name: "id"
     },
+    {
+        type: "input",
+        message: "Enter Employee's email: ",
+        name: "email"
+    },  
     {
         type: "input",
         message: "Enter Manager's office number: ",
-        name: "mgrOffice"
-    },
-]
-
-const engData = [
-    {
-        type: "input",
-        message: "Enter Engineers's name: ",
-        name: "engineer"
-    },
-    {
-        type: "input",
-        message: "Enter Engineer's ID: ",
-        name: "engId"
-    },
-    {
-        type: "input",
-        message: "Enter Engineer's email: ",
-        name: "engEmail"
+        name: "office",
+        when: (data) => data.type === "Manager"
     },
     {
         type: "input",
         message: "Enter Engineer's gitHub username: ",
-        name: "engGit"
-    }
-]
-
-const intData = [
-    {
-        type: "input",
-        message: "Enter Intern's name: ",
-        name: "intern"
-    },
-    {
-        type: "input",
-        message: "Enter Intern's ID: ",
-        name: "intId"
-    },
-    {
-        type: "input",
-        message: "Enter Intern's email: ",
-        name: "intEmail"
+        name: "git",
+        when: (data) => data.type === "Engineer"
     },
     {
         type: "input",
         message: "Enter Intern's school: ",
-        name: "intSchool"
+        name: "school",
+        when: (data) => data.type === "Intern"
     },
-]
+
+];
+
 
 const anotherEmp = [
     {
         type: "list",
-        messgae: "Choose another employee type to add: ",
-        name: "empType",
-        choices: ["Engineer", "Intern", "None"]
-    },
+        message: "Would you like to add another employee?",
+        name:"addAnother",
+        choices: ["Yes", "No"],
+    }
 ]
+
+
+// const testPrompt()
+// const
 // const cal = new ec.Manager("cal", "123", "cp@test.com", "456")
 
 // console.log(cal.officeNumber)
 // cal.getName()
 // cal.getRole()
-function addAnother(data) {
+// function addAnother(data) {
     
-}
+// }
 
-function chooseEmployee() {
+function gatherData() {
     inquirer
-    .prompt(mgrData, anotherEmp)
+    .prompt(empData)
     .then(data => {
-        if(data.empType === "engineer") {
-            inquirer.prompt(engData, anotherEmp)
-            .then(engData => {
+        // console.log(data)
+        const newMgr = new Manager(data.employee, data.id, data.email, data.office)
+        // console.log(newMgr.employee, newMgr.getRole(), newMgr.id, newMgr.email, newMgr.office)
+        // console.log(newMgr)
+        allMgrData.push(render.renderManger(newMgr.name, newMgr.getRole(), newMgr.id, newMgr.email, newMgr.officeNumber))
+        // console.log(allMgrData);
+        inquirer
+        .prompt(anotherEmp).then(answer => {
 
-            })
-        }
-    })
-}
+            if (answer.addAnother === "Yes") {
+                gatherData();
+            } else {
+                console.log("complete")
+            };
+        });
+    });
+};
+
+function writeToFile(fileName, fileData) {
+    fs.writeFile(fileName, fileData, (err) => {
+        err ? console.error(err) : console.log('Success!');
+    });
+};
 
 function init() {
-    chooseEmployee()
-    if(employeeData.empType === "Manager") {
-        inquirer
-        .prompt(
-            {
-                type:"input",
-                message: "Enter Manager's office number: ",
-                name: "offNum"
-            }
-        )
-        .then (data => {
-            console.log(data.offNum)
-        })
-    }
+    // inquirer.prompt(empData).then((data) => {console.log(data)})
+    gatherData();
+    let writeHtml = render.renderPage();
+    writeToFile("./dist/test.html", writeHtml)
 }
 // chooseEmployee()
 // testCase = chooseEmployee()
