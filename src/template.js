@@ -1,7 +1,4 @@
 
-// const allMgrData = [];
-// const allEngData = [];
-// const allIntData = [];
 
 function renderManger(name, role, id, email, office){
     return (
@@ -15,7 +12,7 @@ function renderManger(name, role, id, email, office){
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">ID: ${id}</li>
                     <li class="list-group-item">Email: <a href="mailto:${email}">${email}</a></li>
-                    <li class="list-group-item">Office #: ${office}</li>
+                    <li class="list-group-item">Office Number: ${office}</li>
                 </ul>
             </div>
         </div>
@@ -63,7 +60,7 @@ function renderIntern(name, role, id, email, school) {
     );
 };
 
-function renderPage() {
+function renderPage(mgrData, engData, intData) {
     return(
         `
         <!DOCTYPE html>
@@ -90,7 +87,8 @@ function renderPage() {
                         <div class="line"></div>
                     </div>
                     <div class="row manager">
-                        ${allMgrData.forEach(mgrData => {return mgrData})}
+                        ${mgrData}
+                        
                     </div>
                     <div class="separator">
                         <div class="line"></div>
@@ -98,7 +96,7 @@ function renderPage() {
                         <div class="line"></div>
                     </div>
                     <div class="row engineer">
-                        ${allEngData.forEach(engData => {return(engData)})}
+                        ${engData}
                     </div>
                     <div class="separator">
                         <div class="line"></div>
@@ -106,7 +104,7 @@ function renderPage() {
                         <div class="line"></div>
                     </div>
                     <div class="row intern">
-                        ${allIntData.forEach(intData => {return(intData)})}
+                        ${intData}
                     </div>
                 </section>   
             </main>
