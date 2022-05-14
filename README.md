@@ -21,11 +21,11 @@
   ```
 
   ## Usage
-  Navigate to the folder containing the application within a terminal.  Make sure the necessary modules have been installed.  Excute the following command:
+  Navigate to the directory containing the application within a terminal.  Make sure the necessary modules have been installed.  Excute the following command:
   ```
   node index
   ```
-  The application will run and prompt the user for their responses.  Once completed, a *index.html* file will be created under the *dist* folder.
+  The application will run and prompt the user for their responses.  Once completed, a *index.html* file will be created under the *dist* directory.
   
   ![Team Profile Generator](./images/Capture.PNG)
 
@@ -33,7 +33,7 @@
   Contact me to ask to be added to the repository as a contributor.
 
   ## Tests
-  Tests were perfomred on the 4 main classes, located under the *_tests_* folder. To run the tests, execute the following commnad in a terminal while in the applications file path: 
+  Tests were perfomred on the 4 main classes, located under the *_tests_* directory. To run the tests, execute the following commnad in a terminal while in the applications file path: 
   ```
   npm test
   ```
