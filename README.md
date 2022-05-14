@@ -25,7 +25,7 @@
   ```
   node index
   ```
-  The application will run and prompt the user for their responses.  Once completed, a *index.html* file will be created under the *dist* directory.
+  The application will run and prompt the user for their responses.  Once completed, a *index.html* file will be created under the *dist* directory.  View a walkthrough video [**here.**](https://drive.google.com/file/d/1VhlqWCshKWuWH8BvNDHibqww-iLZC5Kt/view)
   
   ![Team Profile Generator](./images/Capture.PNG)
 
