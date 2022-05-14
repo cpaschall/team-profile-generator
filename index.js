@@ -95,7 +95,7 @@ function anotherQuest () {
                 console.log("You must have at least one Manager designated for to the team.");
                 anotherQuest();
             } else {
-                writeToFile("./dist/test.html", render.renderPage(allMgrData, allEngData, allIntData))
+                writeToFile("./dist/index.html", render.renderPage(allMgrData, allEngData, allIntData))
             }
         };
     });
