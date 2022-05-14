@@ -123,7 +123,7 @@ function init() {
                 anotherQuest();
                 break;
             case("Intern"):
-                const newInt = new Intern(data.employee, data.id, data.email, data.office);
+                const newInt = new Intern(data.employee, data.id, data.email, data.school);
                 allIntData += (render.renderIntern(newInt.name, newInt.getRole(), newInt.id, newInt.email, newInt.school));
                 anotherQuest();
                 break;
